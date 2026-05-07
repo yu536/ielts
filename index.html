@@ -1,1138 +1,937 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS 7.5 Study Plan | 24 апреля - 30 июня 2026</title>
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        header p { opacity: 0.9; font-size: 1.1rem; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
-
-        /* Dashboard */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .score-card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary);
-            transition: transform 0.2s;
-        }
-
-        .score-card:hover { transform: translateY(-2px); }
-
-        .score-card h3 {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .score-values {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-        }
-
-        .current-score {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .arrow { color: var(--text-light); font-size: 1.2rem; }
-
-        .target-score {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--success);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: var(--border);
-            border-radius: 4px;
-            margin-top: 0.75rem;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--success));
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        /* Countdown */
-        .countdown {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .countdown h2 { margin-bottom: 1rem; color: var(--primary); }
-
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .countdown-item {
-            background: var(--bg);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .countdown-item .number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .countdown-item .label {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-        }
-
-        /* Calendar */
-        .calendar-section { margin: 2rem 0; }
-
-        .calendar-section h2 {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-        }
-
-        .day-header {
-            text-align: center;
-            font-weight: 600;
-            color: var(--text-light);
-            padding: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .day-cell {
-            background: var(--card);
-            border-radius: 8px;
-            padding: 0.5rem;
-            min-height: 80px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-            position: relative;
-        }
-
-        .day-cell:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
-        }
-
-        .day-cell.active { border-color: var(--primary); }
-        .day-cell.school { border-left: 3px solid var(--primary); }
-        .day-cell.training { border-left: 3px solid var(--secondary); }
-        .day-cell.chill { border-left: 3px solid var(--success); }
-        .day-cell.exam { background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: var(--secondary); }
-
-        .day-number {
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .day-weekday {
-            font-size: 0.7rem;
-            color: var(--text-light);
-        }
-
-        .day-focus {
-            font-size: 0.7rem;
-            color: var(--text-light);
-            margin-top: 0.25rem;
-            line-height: 1.2;
-            display: -webkit-box;
-            
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .day-badge {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .badge-listening { background: #3b82f6; }
-        .badge-reading { background: #8b5cf6; }
-        .badge-writing { background: #f59e0b; }
-        .badge-speaking { background: #10b981; }
-        .badge-full { background: #ef4444; }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active { display: flex; }
-
-        .modal-content {
-            background: var(--card);
-            border-radius: 16px;
-            max-width: 700px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 { font-size: 1.25rem; }
-
-        .modal-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.25rem;
-            transition: background 0.2s;
-        }
-
-        .modal-close:hover { background: rgba(255,255,255,0.3); }
-
-        .modal-body { padding: 1.5rem; }
-
-        .schedule-item {
-            display: flex;
-            gap: 1rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .schedule-time {
-            min-width: 100px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.875rem;
-        }
-
-        .schedule-content { flex: 1; }
-
-        .schedule-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .schedule-desc {
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        .ielts-focus-box {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-top: 1rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .ielts-focus-box h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Weekly Focus Section */
-        .weekly-section { margin: 2rem 0; }
-
-        .week-card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--secondary);
-        }
-
-        .week-card h3 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .week-card .week-theme {
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .week-card .week-goals {
-            color: var(--text-light);
-            font-size: 0.875rem;
-        }
-
-        /* Tips */
-        .tips-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .tip-card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .tip-card h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tip-card ul {
-            margin-left: 1.25rem;
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        .tip-card li { margin-bottom: 0.25rem; }
-
-        /* Legend */
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
-            justify-content: center;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .calendar-grid { grid-template-columns: repeat(7, 1fr); gap: 2px; }
-            .day-cell { min-height: 60px; padding: 0.25rem; }
-            .day-focus { display: none; }
-            .countdown-grid { grid-template-columns: repeat(2, 1fr); }
-            header h1 { font-size: 1.5rem; }
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--secondary);
-        }
-
-        .highlight-box h3 { color: #92400e; margin-bottom: 0.5rem; }
-
-        .nav-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-tab {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: none;
-            background: var(--border);
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .nav-tab.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .nav-tab:hover:not(.active) { background: #cbd5e1; }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-    </style>
-<base target="_blank">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 7.5 — Study Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Russo+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090f;--bg2:#0c1020;--card:#111827;--card2:#162033;
+  --border:#1e2d45;--border2:#253550;
+  --primary:#00c8f0;--primary-dim:rgba(0,200,240,.1);--primary-glow:rgba(0,200,240,.3);
+  --secondary:#f59e0b;--secondary-dim:rgba(245,158,11,.1);
+  --success:#10b981;--success-dim:rgba(16,185,129,.1);
+  --purple:#8b5cf6;--purple-dim:rgba(139,92,246,.1);
+  --danger:#ef4444;--danger-dim:rgba(239,68,68,.1);
+  --listening:#3b82f6;--reading:#8b5cf6;--writing:#f59e0b;--speaking:#10b981;--full:#ef4444;
+  --text:#dde6f0;--text-dim:#4e6480;--text-bright:#f0f6ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── NOISE LAYER ── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+/* ── HEADER ── */
+header{
+  position:relative;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  padding:3rem 1rem 2.5rem;
+  text-align:center;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:700px;height:350px;
+  background:radial-gradient(ellipse,rgba(0,200,240,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hdr-eyebrow{
+  font-family:'Exo 2',sans-serif;
+  font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--primary);opacity:.7;margin-bottom:.75rem;
+}
+header h1{
+  font-family:'Exo 2',sans-serif;font-weight:900;
+  font-size:clamp(2rem,6vw,4rem);
+  color:var(--text-bright);line-height:1;margin-bottom:.5rem;
+}
+header h1 span{color:var(--primary);text-shadow:0 0 30px var(--primary-glow)}
+header p{color:var(--text-dim);font-size:.9rem}
+
+/* ── CONTAINER ── */
+.wrap{max-width:1300px;margin:0 auto;padding:1.5rem 1rem;position:relative;z-index:1}
+
+/* ── PLAN PROGRESS ── */
+.plan-prog{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem 1.5rem;margin:1.5rem 0;
+}
+.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.prog-label{font-family:'Exo 2',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim)}
+.prog-val{font-family:'Russo One',sans-serif;font-size:1.3rem;color:var(--primary)}
+.prog-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--success));border-radius:3px;box-shadow:0 0 12px var(--primary-glow);transition:width 1.5s ease}
+.prog-subs{display:flex;justify-content:space-between;margin-top:.4rem;font-size:.7rem;color:var(--text-dim)}
+
+/* ── TOP ROW ── */
+.top-row{display:grid;grid-template-columns:1fr 320px;gap:1rem;margin:1.5rem 0}
+@media(max-width:900px){.top-row{grid-template-columns:1fr}}
+
+/* ── COUNTDOWN ── */
+.cdown-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.5rem;
+}
+.box-label{
+  font-family:'Exo 2',sans-serif;font-size:.7rem;text-transform:uppercase;
+  letter-spacing:.15em;color:var(--text-dim);margin-bottom:1.25rem;
+}
+.cdown-nums{display:flex;gap:1rem;align-items:center}
+.cd-unit{text-align:center}
+.cd-num{font-family:'Russo One',sans-serif;font-size:2.75rem;color:var(--primary);line-height:1;text-shadow:0 0 20px var(--primary-glow)}
+.cd-lbl{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+.cd-sep{font-size:1.5rem;color:var(--border2);margin-top:-.5rem}
+
+/* ── TODAY BOX ── */
+.today-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.5rem;
+}
+.today-date{
+  font-family:'Exo 2',sans-serif;font-weight:700;font-size:1rem;
+  color:var(--text-bright);margin-bottom:1rem;
+}
+.today-date span{color:var(--secondary)}
+.today-row{display:flex;gap:.6rem;align-items:center;padding:.3rem 0;font-size:.8rem}
+.today-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.today-time{font-family:'Exo 2',sans-serif;font-weight:600;color:var(--primary);min-width:70px;font-size:.75rem}
+.today-act{color:var(--text)}
+
+/* ── SECTION TITLE ── */
+.sec-title{
+  font-family:'Exo 2',sans-serif;font-weight:700;font-size:1.15rem;
+  color:var(--text-bright);margin:2rem 0 1rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── SCORES ── */
+.scores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.75rem;margin:1rem 0}
+.sc-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.1rem 1.25rem;position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s;
+}
+.sc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc-card.l::before{background:var(--listening)}
+.sc-card.r::before{background:var(--reading)}
+.sc-card.w::before{background:var(--writing)}
+.sc-card.sp::before{background:var(--speaking)}
+.sc-card.ov::before{background:linear-gradient(90deg,var(--primary),var(--success))}
+.sc-card:hover{transform:translateY(-2px);border-color:var(--border2)}
+.sc-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);font-family:'Exo 2',sans-serif;margin-bottom:.4rem}
+.sc-vals{display:flex;align-items:baseline;gap:.35rem}
+.sc-cur{font-family:'Russo One',sans-serif;font-size:1.9rem;color:var(--text-bright)}
+.sc-arr{color:var(--text-dim);font-size:.9rem}
+.sc-tgt{font-family:'Russo One',sans-serif;font-size:1.9rem;color:var(--success)}
+.sc-bar{height:4px;background:var(--border);border-radius:2px;margin-top:.6rem;overflow:hidden}
+.sc-fill{height:100%;border-radius:2px;transition:width 1.5s ease}
+
+/* ── REMINDERS ── */
+.rem-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
+@media(max-width:600px){.rem-row{grid-template-columns:1fr}}
+.rem-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1rem 1.25rem;display:flex;gap:.75rem;align-items:center;
+}
+.rem-icon{font-size:1.4rem;flex-shrink:0}
+.rem-title{font-weight:600;color:var(--text-bright);font-size:.85rem;margin-bottom:.1rem}
+.rem-desc{font-size:.75rem;color:var(--text-dim)}
+
+/* ── CYCLES ── */
+.cycle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.75rem;margin:1rem 0}
+.cyc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;border-top:2px solid}
+.cyc-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.cyc-desc{font-size:.78rem;color:var(--text-dim);line-height:1.5}
+.cyc-dots{display:flex;gap:.3rem;margin-top:.75rem}
+.cyc-dot{width:8px;height:8px;border-radius:50%}
+
+/* ── CALENDAR ── */
+.cal-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem;overflow-x:auto;
+}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;min-width:560px}
+.cal-hdr{text-align:center;padding:.4rem;font-family:'Exo 2',sans-serif;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim)}
+.cal-cell{
+  background:var(--bg2);border:1px solid var(--border);border-radius:7px;
+  padding:.35rem .4rem;min-height:68px;cursor:pointer;transition:all .15s;
+  position:relative;overflow:hidden;
+}
+.cal-cell:hover{border-color:rgba(0,200,240,.35);background:var(--card2)}
+.cal-cell.today{border-color:var(--primary);box-shadow:0 0 12px rgba(0,200,240,.15)}
+.cal-cell.exam{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(245,158,11,.04));border-color:var(--secondary)}
+.cal-cell.dim{opacity:.18;cursor:default;pointer-events:none}
+.cal-num{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;color:var(--text-bright)}
+.cal-wday{font-size:.58rem;color:var(--text-dim);text-transform:uppercase}
+.cal-focus{font-size:.58rem;color:var(--text-dim);margin-top:.15rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cal-badge{position:absolute;bottom:4px;right:4px;width:7px;height:7px;border-radius:50%}
+.cal-stripe{position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px}
+
+/* ── LEGEND ── */
+.legend{display:flex;flex-wrap:wrap;gap:.6rem;margin:.75rem 0;justify-content:center}
+.leg-item{display:flex;align-items:center;gap:.35rem;font-size:.73rem;color:var(--text-dim)}
+.leg-dot{width:9px;height:9px;border-radius:50%}
+
+/* ── WEEK TABS ── */
+.week-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+.w-tab{
+  padding:.35rem .8rem;border-radius:8px;border:1px solid var(--border);
+  background:transparent;color:var(--text-dim);cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:.78rem;transition:all .2s;
+}
+.w-tab.active{background:var(--primary);border-color:var(--primary);color:#000;font-weight:600}
+.w-tab:hover:not(.active){border-color:var(--primary);color:var(--primary)}
+
+.week-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
+.wp-theme{font-family:'Exo 2',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:.25rem}
+.wp-goals{font-size:.82rem;color:var(--text-dim);margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.day-row{display:flex;gap:.75rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.035);align-items:flex-start}
+.day-row:last-child{border-bottom:none}
+.dr-name{min-width:88px;font-family:'Exo 2',sans-serif;font-weight:600;font-size:.72rem;color:var(--text-dim);padding-top:.15rem;text-transform:uppercase}
+.dr-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:.35rem}
+.dr-focus{font-size:.84rem;font-weight:500;color:var(--text-bright);margin-bottom:.08rem}
+.dr-task{font-size:.77rem;color:var(--text-dim);line-height:1.45}
+.cy-badge{
+  display:inline-block;font-size:.58rem;padding:.08rem .4rem;border-radius:4px;
+  background:rgba(255,255,255,.06);color:var(--text-dim);
+  font-weight:600;margin-left:.4rem;text-transform:uppercase;vertical-align:middle;
+}
+
+/* ── STRATEGY GRID ── */
+.strat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:.75rem}
+.strat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.strat-card h4{
+  font-family:'Exo 2',sans-serif;font-weight:700;font-size:.85rem;
+  color:var(--text-bright);margin-bottom:.65rem;display:flex;align-items:center;gap:.4rem;
+}
+.strat-card ul{margin-left:.9rem;font-size:.78rem;color:var(--text-dim)}
+.strat-card li{margin-bottom:.3rem;line-height:1.4}
+
+/* ── RESOURCES ── */
+.res-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1rem 0}
+.res-box h3{font-family:'Exo 2',sans-serif;font-weight:700;color:var(--secondary);margin-bottom:1rem}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.75rem}
+.res-grp-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);font-weight:600;margin-bottom:.35rem}
+.res-item{font-size:.78rem;color:var(--text-dim);margin-bottom:.2rem;line-height:1.4}
+
+/* ── MODAL ── */
+.modal{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(6px);
+  z-index:1000;justify-content:center;align-items:center;padding:1rem;
+}
+.modal.open{display:flex}
+.modal-box{
+  background:var(--card);border:1px solid var(--border2);border-radius:18px;
+  max-width:660px;width:100%;max-height:90vh;overflow-y:auto;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{
+  background:linear-gradient(135deg,rgba(0,200,240,.08),rgba(0,200,240,.02));
+  border-bottom:1px solid var(--border);padding:1.25rem 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;backdrop-filter:blur(10px);border-radius:18px 18px 0 0;
+}
+.modal-head h2{font-family:'Exo 2',sans-serif;font-weight:700;font-size:1rem;color:var(--text-bright)}
+.m-close{
+  background:var(--border);border:none;color:var(--text);
+  width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.m-close:hover{background:var(--danger);color:#fff}
+.modal-body{padding:1.25rem 1.5rem}
+
+.sched-row{display:flex;gap:.75rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start}
+.sched-row:last-child{border-bottom:none}
+.s-time{min-width:90px;font-family:'Exo 2',sans-serif;font-weight:600;font-size:.75rem;color:var(--primary);padding-top:.1rem}
+.s-icon{font-size:.95rem;flex-shrink:0;padding-top:.05rem}
+.s-title{font-weight:600;font-size:.83rem;color:var(--text-bright);margin-bottom:.1rem}
+.s-desc{font-size:.77rem;color:var(--text-dim);line-height:1.4}
+.m-focus-box{
+  background:linear-gradient(135deg,rgba(0,200,240,.07),rgba(0,200,240,.02));
+  border:1px solid rgba(0,200,240,.18);border-radius:10px;padding:1.1rem;margin-top:1rem;
+}
+.m-focus-title{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:.4rem}
+.m-focus-text{font-size:.8rem;color:var(--text-dim);line-height:1.6}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:2rem 1rem;
+  color:var(--text-dim);font-size:.78rem;
+  border-top:1px solid var(--border);margin-top:2rem;
+}
+footer strong{color:var(--primary)}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.pulse{animation:pulse 2s infinite}
+</style>
 </head>
 <body>
-    <header>
-        <h1  id="difference">🎯 IELTS 7.5 Study Plan</h1>
-        <p>24 апреля — 30 июня 2026 | Интенсивная подготовка за 67 дней</p>
-    </header>
 
-    <div class="container">
-        <!-- Dashboard -->
-        <div class="dashboard">
-            <div class="score-card">
-                <h3>Listening</h3>
-                <div class="score-values">
-                    <span class="current-score">6.0</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score">7.5</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
-            </div>
-            <div class="score-card">
-                <h3>Reading</h3>
-                <div class="score-values">
-                    <span class="current-score">5.5</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score">7.5</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 55%"></div></div>
-            </div>
-            <div class="score-card">
-                <h3>Writing Task 1</h3>
-                <div class="score-values">
-                    <span class="current-score">5.5</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score">7.0</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 55%"></div></div>
-            </div>
-            <div class="score-card">
-                <h3>Writing Task 2</h3>
-                <div class="score-values">
-                    <span class="current-score">5.5</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score">7.0</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 55%"></div></div>
-            </div>
-            <div class="score-card">
-                <h3>Speaking</h3>
-                <div class="score-values">
-                    <span class="current-score">6.0</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score">7.5</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
-            </div>
-            <div class="score-card" style="border-left-color: var(--secondary);">
-                <h3>Overall Target</h3>
-                <div class="score-values">
-                    <span class="current-score">6.0</span>
-                    <span class="arrow">→</span>
-                    <span class="target-score" style="color: var(--secondary);">7.5</span>
-                </div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 58%"></div></div>
-            </div>
-        </div>
+<header>
+  <div class="hdr-eyebrow">🎯 Интенсивная подготовка — 67 дней</div>
+  <h1 id="difference">IELTS <span>7.5</span> Study Plan</h1>
+  <p>24 апреля — 30 июня 2026 &nbsp;•&nbsp; ~6 ч 20 мин в день &nbsp;•&nbsp; Система 3-дневных циклов</p>
+</header>
 
-        <!-- Countdown -->
-        <div class="countdown">
-            <h2>⏳ До экзамена осталось</h2>
-            <div class="countdown-grid">
-                <div class="countdown-item"><div class="number" id="cd-days">67</div><div class="label">дней</div></div>
-                <div class="countdown-item"><div class="number" id="cd-hours">0</div><div class="label">часов</div></div>
-                <div class="countdown-item"><div class="number" id="cd-minutes">0</div><div class="label">минут</div></div>
-                <div class="countdown-item"><div class="number" id="cd-seconds">0</div><div class="label">секунд</div></div>
-            </div>
-        </div>
+<div class="wrap">
 
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item"><div class="legend-color" style="background: var(--primary)"></div>Школа + Уч. центр</div>
-            <div class="legend-item"><div class="legend-color" style="background: var(--secondary)"></div>Школа + Тренировка</div>
-            <div class="legend-item"><div class="legend-color" style="background: var(--success)"></div>Chill Day</div>
-            <div class="legend-item"><div class="legend-color" style="background: #3b82f6"></div>Listening</div>
-            <div class="legend-item"><div class="legend-color" style="background: #8b5cf6"></div>Reading</div>
-            <div class="legend-item"><div class="legend-color" style="background: #f59e0b"></div>Writing</div>
-            <div class="legend-item"><div class="legend-color" style="background: #10b981"></div>Speaking</div>
-            <div class="legend-item"><div class="legend-color" style="background: #ef4444"></div>Full Test</div>
-        </div>
-
-        <!-- Calendar -->
-        <div class="calendar-section">
-            <h2 class="section-title">📅 Календарь подготовки</h2>
-            <div class="calendar-grid" id="calendar">
-                <!-- Generated by JS -->
-            </div>
-        </div>
-
-        <!-- Weekly Focus -->
-        <div class="weekly-section">
-            <h2 class="section-title">📊 Недельный фокус</h2>
-            <div class="nav-tabs">
-                <button class="nav-tab active" onclick="showWeek(0)">Неделя 1</button>
-                <button class="nav-tab" onclick="showWeek(1)">Неделя 2</button>
-                <button class="nav-tab" onclick="showWeek(2)">Неделя 3</button>
-                <button class="nav-tab" onclick="showWeek(3)">Неделя 4</button>
-                <button class="nav-tab" onclick="showWeek(4)">Неделя 5</button>
-                <button class="nav-tab" onclick="showWeek(5)">Неделя 6</button>
-                <button class="nav-tab" onclick="showWeek(6)">Неделя 7</button>
-                <button class="nav-tab" onclick="showWeek(7)">Неделя 8</button>
-                <button class="nav-tab" onclick="showWeek(8)">Неделя 9</button>
-                <button class="nav-tab" onclick="showWeek(9)">Неделя 10</button>
-            </div>
-            <div id="weeks-container">
-                <!-- Generated by JS -->
-            </div>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips-section">
-            <h2 class="section-title">💡 Стратегии по секциям</h2>
-            <div class="tips-grid">
-                <div class="tip-card">
-                    <h4>🎧 Listening (6.0 → 7.5)</h4>
-                    <ul>
-                        <li>Ежедневно слушай подкасты в дороге (BBC 6 Minute English, TED Talks)</li>
-                        <li>Практикуй prediction: читай вопросы ДО прослушивания</li>
-                        <li>Работай над разными акцентами (British, Australian, American)</li>
-                        <li>Пиши ответы СРАЗУ, не откладывай на потом</li>
-                        <li>Проверяй орфографию — это частая ошибка</li>
-                        <li>Фокус на Section 3 & 4 (academic, самые сложные)</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h4>📖 Reading (5.5 → 7.5)</h4>
-                    <ul>
-                        <li>Skimming: читай первое и последнее предложение абзаца</li>
-                        <li>Scanning: ищи ключевые слова, не читай всё подряд</li>
-                        <li>Учи парафразы — IELTS любит синонимы</li>
-                        <li>True/False/Not Given: практикуй отличие False от Not Given</li>
-                        <li>Тренируйся на время: 20 минут на текст</li>
-                        <li>Расширяй академический словарный запас</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h4>✍️ Writing Task 1 (5.5 → 7.0)</h4>
-                    <ul>
-                        <li>Overview — самый важный параграф, пиши его вторым</li>
-                        <li>Выбирай 3-4 ключевых тренда, не описывай всё</li>
-                        <li>Учи vocabulary для трендов: surge, plummet, fluctuate, plateau</li>
-                        <li>Сравнивай группы данных, не перечисляй по очереди</li>
-                        <li>150 слов минимум, но не более 200</li>
-                        <li>Практикуй все типы: line, bar, pie, table, map, process</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h4>📝 Writing Task 2 (5.5 → 7.0)</h4>
-                    <ul>
-                        <li>Планируй 5-10 минут перед написанием</li>
-                        <li>Чёткая структура: Introduction + 2 Body + Conclusion</li>
-                        <li>Каждый абзац: Topic sentence + Explain + Example</li>
-                        <li>Используй сложные предложения (conditionals, relative clauses)</li>
-                        <li>250+ слов обязательно, идеально 260-280</li>
-                        <li>Проверяй cohesion: linking words должны быть разнообразными</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h4>🗣️ Speaking (6.0 → 7.5)</h4>
-                    <ul>
-                        <li>Part 1: отвечай прямо + 1-2 предложения объяснения</li>
-                        <li>Part 2: используй 1 минуту подготовки максимально</li>
-                        <li>Part 2 структура: Intro → Past → Detail → Opinion → Future</li>
-                        <li>Part 3: давай обобщённые ответы, не личные</li>
-                        <li>Используй идиомы и collocation (но естественно)</li>
-                        <li>Записывай себя ежедневно, слушай и исправляй</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h4>⚡ Общие советы</h4>
-                    <ul>
-                        <li>Спи 7-8 часов — мозг не работает без сна</li>
-                        <li>Питайся правильно, особенно в дни интенсива</li>
-                        <li>Делай перерывы каждые 45-50 минут</li>
-                        <li>Используй Pomodoro: 25 минут работы, 5 минут отдыха</li>
-                        <li>Регулярно пересматривай ошибки в тетради</li>
-                        <li>Верь в себя — 67 дней достаточно для +1.5 band!</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="highlight-box">
-            <h3>🎓 Рекомендуемые ресурсы</h3>
-            <p><strong>Книги:</strong> Cambridge IELTS 13-18 (главный ресурс), Vocabulary for IELTS (Collins), Grammar for IELTS</p>
-            <p><strong>Сайты:</strong> IELTS Liz, IELTS Simon, IELTS Advantage (YouTube)</p>
-            <p><strong>Подкасты:</strong> BBC 6 Minute English, TED Talks Daily, All Ears English</p>
-            <p><strong>Приложения:</strong> IELTS Prep (British Council), Cambridge English Write & Improve</p>
-        </div>
+  <!-- PLAN PROGRESS -->
+  <div class="plan-prog">
+    <div class="prog-head">
+      <div class="prog-label">📈 Прогресс плана</div>
+      <div class="prog-val" id="progVal">0 / 67 дней</div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2 id="modal-title">Детали дня</h2>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Generated by JS -->
-            </div>
-        </div>
+    <div class="prog-track"><div class="prog-fill" id="progBar" style="width:0%"></div></div>
+    <div class="prog-subs">
+      <span>24 апреля 2026</span>
+      <span id="progPct">0% пройдено</span>
+      <span>30 июня 2026</span>
     </div>
+  </div>
 
-    <script>
-        // Data
-        const startDate = new Date('2026-04-24');
-        const examDate = new Date('2026-06-30');
+  <!-- TOP ROW -->
+  <div class="top-row">
+    <div class="cdown-box">
+      <div class="box-label">⏳ До экзамена IELTS осталось</div>
+      <div class="cdown-nums">
+        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-lbl">дней</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-lbl">часов</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">минут</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">сек</div></div>
+      </div>
+    </div>
+    <div class="today-box">
+      <div class="today-date">📅 <span id="todayLabel">Сегодня</span></div>
+      <div id="todaySched"></div>
+    </div>
+  </div>
 
-        const weekData = [
-            {
-                theme: "Foundation — Понимание формата",
-                goals: "Изучить структуру всех секций IELTS. Понять требования к 7.5. Начать базовый vocabulary.",
-                days: {
-                    mon: { focus: "Writing T1: Line Graphs", task: "Изучить структуру (Overview + 2 Body). Написать 1 эссе. Выучить 20 слов для трендов.", badge: "writing" },
-                    tue: { focus: "Reading: Skimming & Scanning", task: "Cambridge 17 Test 1 (только S1-2). Практиковать skimming за 3 минуты на текст.", badge: "reading" },
-                    wed: { focus: "Speaking Part 1", task: "Практиковать 10 тем (home, study, work, hobbies). Записать себя. Фокус на fluency.", badge: "speaking" },
-                    thu: { focus: "Listening: Prediction", task: "Cambridge 17 Test 1 (S1-2). Читать вопросы ДО аудио. Практиковать prediction.", badge: "listening" },
-                    fri: { focus: "Writing T2: Opinion Essay", task: "Изучить 4-параграфную структуру. Написать 1 эссе (250 слов). Linking words.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 17 Test 2 полностью. Timing: Reading 60 min, Listening 30 min.", badge: "full" },
-                    sun: { focus: "Review & Vocabulary", task: "Разобрать ошибки недели. Составить список 50 академических слов. Отдых.", badge: "reading" }
-                }
-            },
-            {
-                theme: "Vocabulary & Grammar Building",
-                goals: "Нарастить академический словарный запас. Улучшить сложные грамматические конструкции.",
-                days: {
-                    mon: { focus: "Writing T1: Bar Charts", task: "Сравнительный язык: significantly higher, marginally lower. Написать 1 эссе.", badge: "writing" },
-                    tue: { focus: "Reading: Vocabulary in Context", task: "Cambridge 17 Test 3. Выписывать незнакомые слова с контекстом. Guessing meaning.", badge: "reading" },
-                    wed: { focus: "Speaking Part 2: People", task: "Cue cards: describe a person you admire. Структура: Past-Present-Future. Запись.", badge: "speaking" },
-                    thu: { focus: "Listening: Accents", task: "Cambridge 17 Test 3 (S3-4). Фокус на британский и австралийский акценты.", badge: "listening" },
-                    fri: { focus: "Writing T2: Discussion Essay", task: "Balanced view структура. Some people think... while others argue... Написать 1 эссе.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 17 Test 4 полностью. Анализировать ошибки сразу после теста.", badge: "full" },
-                    sun: { focus: "Grammar: Complex Sentences", task: "Conditionals (1-3), Relative clauses, Passive voice. Упражнения + отдых.", badge: "reading" }
-                }
-            },
-            {
-                theme: "Reading & Listening Intensive",
-                goals: "Увеличить скорость чтения. Повысить точность Listening до 30+/40.",
-                days: {
-                    mon: { focus: "Writing T1: Pie Charts", task: "Proportion language: the majority, a small fraction, accounts for. Написать 1 эссе.", badge: "writing" },
-                    tue: { focus: "Reading: Full Test + Analysis", task: "Cambridge 16 Test 1 (60 min). После — детальный разбор каждой ошибки.", badge: "reading" },
-                    wed: { focus: "Speaking Part 2: Places", task: "Cue cards: describe a place you visited. Фокус на descriptive vocabulary.", badge: "speaking" },
-                    thu: { focus: "Listening: Full Test + Transcripts", task: "Cambridge 16 Test 1 (30 min). После — читать transcripts, выписывать новые фразы.", badge: "listening" },
-                    fri: { focus: "Writing T2: Problem-Solution", task: "Структура: Problem → Cause → Solution → Evaluation. Написать 1 эссе.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 16 Test 2 полностью. Цель: Reading 32+/40, Listening 33+/40.", badge: "full" },
-                    sun: { focus: "Speaking Part 3 + Vocab", task: "Abstract questions: Why do people...? What are the benefits...? Практика 30 мин.", badge: "speaking" }
-                }
-            },
-            {
-                theme: "Writing & Speaking Intensive",
-                goals: "Отработать все типы эссе. Достичь fluency в Speaking. Получить feedback.",
-                days: {
-                    mon: { focus: "Writing T1: Tables", task: "Data selection: что включать, что опускать. Написать 1 эссе. Сравнение групп данных.", badge: "writing" },
-                    tue: { focus: "Reading: T/F/NG Focus", task: "Cambridge 16 Test 3. Фокус на отличие False от Not Given. 20 мин на текст.", badge: "reading" },
-                    wed: { focus: "Speaking: Full Mock Test", task: "15-минутный мок с записью. Part 1-2-3 подряд. Анализировать запись.", badge: "speaking" },
-                    thu: { focus: "Listening: Academic Sections", task: "Cambridge 16 Test 3 (S3-4). University lectures, student discussions. Note-taking.", badge: "listening" },
-                    fri: { focus: "Writing T2: Advantages-Disadvantages", task: "Структура: Intro → Adv → Disadv → Opinion. Написать 1 эссе.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 16 Test 4 полностью. Timing строго по секундомеру.", badge: "full" },
-                    sun: { focus: "Writing Review + Speaking Grammar", task: "Переписать 2 эссе недели с исправлениями. Speaking: complex tenses practice.", badge: "writing" }
-                }
-            },
-            {
-                theme: "Time Management & Full Tests",
-                goals: "Научиться работать в exam conditions. Уложиться в time limits без потери качества.",
-                days: {
-                    mon: { focus: "Writing: Full Timed Test", task: "T1: 20 min + T2: 40 min. Без остановок. Потом self-check по checklist.", badge: "writing" },
-                    tue: { focus: "Reading: Strict Timing", task: "Cambridge 15 Test 1 (60 min, no extra time). Цель: закончить за 55 минут.", badge: "reading" },
-                    wed: { focus: "Speaking: Mock with Friends", task: "Мок-тест с друзьями. Фокус на непрерывность речи (no long pauses).", badge: "speaking" },
-                    thu: { focus: "Listening: Strict Timing", task: "Cambridge 15 Test 1 (30 min). Только одно прослушивание. No pauses.", badge: "listening" },
-                    fri: { focus: "Writing: Full Timed Test", task: "Cambridge 15 Test 2 topics. T1 + T2 подряд. Проверить word count.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 15 Test 2 полностью. Симуляция экзамена: утро, тишина, таймер.", badge: "full" },
-                    sun: { focus: "Error Analysis + Weak Areas", task: "Создать таблицу ошибок. Определить 2 самых слабых навыка. План на неделю 6.", badge: "reading" }
-                }
-            },
-            {
-                theme: "Weak Areas Attack",
-                goals: "Сфокусироваться на самых проблемных зонах. Writing T1 и Reading — приоритет.",
-                days: {
-                    mon: { focus: "Writing T1: Maps & Processes", task: "Редкие типы, но важные. Написать 1 map + 1 process. Language of stages/locations.", badge: "writing" },
-                    tue: { focus: "Reading: Matching Headings", task: "Cambridge 15 Test 3. Matching headings + paragraph matching. Стратегия: читать абзац целиком.", badge: "reading" },
-                    wed: { focus: "Speaking Part 3: Critical Thinking", task: "Сложные вопросы: Do you think...? Why might...? Ответы 4-5 предложений.", badge: "speaking" },
-                    thu: { focus: "Listening: Multiple Choice", task: "Cambridge 15 Test 3. MC + matching. Фокус на distractors (ловушки).", badge: "listening" },
-                    fri: { focus: "Writing T2: Double Question", task: "Direct questions essay. Отвечать на ОБА вопроса равномерно. Написать 1 эссе.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 15 Test 4 полностью. Применить новые стратегии.", badge: "full" },
-                    sun: { focus: "Collocations + Phrasal Verbs", task: "50 collocations для IELTS. Phrasal verbs в академическом контексте. Отдых.", badge: "reading" }
-                }
-            },
-            {
-                theme: "Peak Performance — Daily Simulation",
-                goals: "Экзамен каждый день. Выработать стабильность. Достичь 7.5 consistently.",
-                days: {
-                    mon: { focus: "Full Writing + Speaking Mock", task: "T1 + T2 (timed) утром. Speaking mock вечером. Full simulation.", badge: "full" },
-                    tue: { focus: "Full Reading + Listening", task: "Cambridge 14 Test 1 полностью. Morning simulation. Анализ сразу после.", badge: "full" },
-                    wed: { focus: "Full Writing + Speaking Mock", task: "T1 + T2 (timed). Speaking: focus on Part 2 (2 min non-stop).", badge: "full" },
-                    thu: { focus: "Full Reading + Listening", task: "Cambridge 14 Test 2 полностью. Цель: Reading 34+/40, Listening 35+/40.", badge: "full" },
-                    fri: { focus: "Full Writing + Speaking Mock", task: "T1 + T2 (timed). Speaking: focus on Part 3 (complex answers).", badge: "full" },
-                    sat: { focus: "Full Reading + Listening + Vocab", task: "Cambridge 14 Test 3 полностью. Вечером: review vocabulary list.", badge: "full" },
-                    sun: { focus: "Full Mock Exam", task: "Все 4 секции подряд (2h45min). Как настоящий экзамен. Оценить себя честно.", badge: "full" }
-                }
-            },
-            {
-                theme: "Advanced Band 7.5+ Strategies",
-                goals: "Добавить sophistication. Idiomatic language. Complex structures. Натуральность.",
-                days: {
-                    mon: { focus: "Writing T1: Advanced Vocabulary", task: "Surge, plummet, fluctuate, plateau, gradual decline. Написать 2 эссе с новыми словами.", badge: "writing" },
-                    tue: { focus: "Reading: Speed Reading", task: "Cambridge 14 Test 1 (цель: 50 мин). Skimming за 2 мин на текст. Больше времени на вопросы.", badge: "reading" },
-                    wed: { focus: "Speaking: Idiomatic Language", task: "Idioms: piece of cake, hit the nail on the head (но естественно!). Практика 5 тем.", badge: "speaking" },
-                    thu: { focus: "Listening: Inference & Attitude", task: "Cambridge 14 Test 1. Что подразумевает speaker? Attitude words: skeptical, enthusiastic.", badge: "listening" },
-                    fri: { focus: "Writing T2: Sophisticated Arguments", task: "Nuanced opinion: While I generally agree, it is important to acknowledge... Написать 1 эссе.", badge: "writing" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 14 Test 2 полностью. Применить speed techniques.", badge: "full" },
-                    sun: { focus: "Advanced Grammar + Complex Structures", task: "Inversion, cleft sentences, participle clauses. Упражнения + отдых.", badge: "reading" }
-                }
-            },
-            {
-                theme: "Final Intensive Push",
-                goals: "Максимальный объём. Полные тесты ежедневно. Исправление последних ошибок.",
-                days: {
-                    mon: { focus: "Full Writing + Speaking Recorded", task: "T1 + T2 (timed). Speaking Part 2 recorded. Слушать и исправлять.", badge: "full" },
-                    tue: { focus: "Full Reading + Listening", task: "Cambridge 14 Test 3 полностью. Morning exam conditions.", badge: "full" },
-                    wed: { focus: "Full Writing + Speaking Mock", task: "T1 + T2 (timed). Speaking mock with friends (финальная отработка).", badge: "full" },
-                    thu: { focus: "Full Reading + Listening", task: "Cambridge 14 Test 4 полностью. Анализ: что ещё можно улучшить?", badge: "full" },
-                    fri: { focus: "Full Writing + Speaking Part 3", task: "T1 + T2 (timed). Speaking: deep Part 3 practice (abstract, complex).", badge: "full" },
-                    sat: { focus: "Full Reading + Listening", task: "Cambridge 13 Test 1 полностью. Последний hard push.", badge: "full" },
-                    sun: { focus: "Full Mock + Review All Mistakes", task: "Полный мок. Перечитать тетрадь ошибок. Убедиться, что старые ошибки не повторяются.", badge: "full" }
-                }
-            },
-            {
-                theme: "Taper & Confidence",
-                goals: "Снизить объём, сохранить остроту. Набраться сил. Уверенность перед экзаменом.",
-                days: {
-                    mon: { focus: "Light Reading + Listening", task: "Cambridge 13 Test 2: только S1-2 Listening + 1 текст Reading. Легко.", badge: "listening" },
-                    tue: { focus: "Light Writing + Speaking Review", task: "Спланировать 2 эссе (без написания). Повторить favorite Speaking topics.", badge: "writing" },
-                    wed: { focus: "Light Practice + Vocab Refresh", task: "30 min Listening (podcast). Просмотреть vocabulary list. Релакс.", badge: "listening" },
-                    thu: { focus: "Light Writing + Speaking", task: "Написать 1 короткий план эссе. 10 мин Speaking practice (alone).", badge: "speaking" },
-                    fri: { focus: "Exam Prep", task: "Подготовить документы. Ранний сон. Ничего нового не учить!", badge: "reading" },
-                    sat: { focus: "REST DAY", task: "Минимум: 30 min лёгкого Listening (podcast). Гулять, отдыхать, спать.", badge: "listening" },
-                    sun: { focus: "Speaking Warm-up", task: "15 min лёгкого Speaking (alone). Повторить Part 1 ответы. Релакс.", badge: "speaking" }
-                }
-            }
-        ];
+  <!-- SCORES -->
+  <h2 class="sec-title">📊 Прогресс по секциям</h2>
+  <div class="scores-grid">
+    <div class="sc-card l"><div class="sc-lbl">Listening</div><div class="sc-vals"><span class="sc-cur">6.0</span><span class="sc-arr">→</span><span class="sc-tgt">7.5</span></div><div class="sc-bar"><div class="sc-fill" style="width:60%;background:var(--listening)"></div></div></div>
+    <div class="sc-card r"><div class="sc-lbl">Reading</div><div class="sc-vals"><span class="sc-cur">5.5</span><span class="sc-arr">→</span><span class="sc-tgt">7.5</span></div><div class="sc-bar"><div class="sc-fill" style="width:55%;background:var(--reading)"></div></div></div>
+    <div class="sc-card w"><div class="sc-lbl">Writing T1 + T2</div><div class="sc-vals"><span class="sc-cur">5.5</span><span class="sc-arr">→</span><span class="sc-tgt">7.0</span></div><div class="sc-bar"><div class="sc-fill" style="width:55%;background:var(--writing)"></div></div></div>
+    <div class="sc-card sp"><div class="sc-lbl">Speaking</div><div class="sc-vals"><span class="sc-cur">6.0</span><span class="sc-arr">→</span><span class="sc-tgt">7.5</span></div><div class="sc-bar"><div class="sc-fill" style="width:60%;background:var(--speaking)"></div></div></div>
+    <div class="sc-card ov"><div class="sc-lbl">Overall Target</div><div class="sc-vals"><span class="sc-cur">6.0</span><span class="sc-arr">→</span><span class="sc-tgt" style="color:var(--secondary)">7.5</span></div><div class="sc-bar"><div class="sc-fill" style="width:58%;background:linear-gradient(90deg,var(--primary),var(--success))"></div></div></div>
+  </div>
 
-        // Generate calendar
-        function generateCalendar() {
-            const calendar = document.getElementById('calendar');
-            const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  <!-- REMINDERS -->
+  <div class="rem-row">
+    <div class="rem-card">
+      <div class="rem-icon">🏃</div>
+      <div><div class="rem-title">Тренировка — Пн–Сб</div><div class="rem-desc">17:00–18:30 (1.5 ч) каждый день кроме воскресенья</div></div>
+    </div>
+    <div class="rem-card">
+      <div class="rem-icon">🚿</div>
+      <div><div class="rem-title">Гигиена — Вт / Чт / Сб</div><div class="rem-desc">18:30–19:30 (1 ч). В остальные дни — 10–15 мин.</div></div>
+    </div>
+  </div>
 
-            // Headers
-            dayNames.forEach(day => {
-                const header = document.createElement('div');
-                header.className = 'day-header';
-                header.textContent = day;
-                calendar.appendChild(header);
-            });
+  <!-- 3-DAY CYCLES -->
+  <h2 class="sec-title">🔄 Система 3-дневных циклов</h2>
+  <div class="cycle-grid">
+    <div class="cyc-card" style="border-color:var(--listening)">
+      <div class="cyc-name" style="color:var(--listening)">🎧 Listening</div>
+      <div class="cyc-desc">День 1: Изучение типа вопроса. День 2: Практика + ошибки. День 3: Мини-мок S1–4.</div>
+      <div class="cyc-dots"><div class="cyc-dot" style="background:var(--listening)"></div><div class="cyc-dot" style="background:var(--listening);opacity:.5"></div><div class="cyc-dot" style="background:var(--full)"></div></div>
+    </div>
+    <div class="cyc-card" style="border-color:var(--reading)">
+      <div class="cyc-name" style="color:var(--reading)">📖 Reading</div>
+      <div class="cyc-desc">День 1: Стратегия + тип задания. День 2: Timed practice (20 мин/текст). День 3: Full text + разбор.</div>
+      <div class="cyc-dots"><div class="cyc-dot" style="background:var(--reading)"></div><div class="cyc-dot" style="background:var(--reading);opacity:.5"></div><div class="cyc-dot" style="background:var(--full)"></div></div>
+    </div>
+    <div class="cyc-card" style="border-color:var(--writing)">
+      <div class="cyc-name" style="color:var(--writing)">✍️ Writing</div>
+      <div class="cyc-desc">День 1: Структура + шаблон. День 2: Написать эссе + разбор. День 3: T1+T2 timed (как на экзамене).</div>
+      <div class="cyc-dots"><div class="cyc-dot" style="background:var(--writing)"></div><div class="cyc-dot" style="background:var(--writing);opacity:.5"></div><div class="cyc-dot" style="background:var(--full)"></div></div>
+    </div>
+    <div class="cyc-card" style="border-color:var(--speaking)">
+      <div class="cyc-name" style="color:var(--speaking)">🗣️ Speaking</div>
+      <div class="cyc-desc">День 1: Part 1 fluency. День 2: Part 2 монолог (2 мин с записью). День 3: Part 3 abstract questions.</div>
+      <div class="cyc-dots"><div class="cyc-dot" style="background:var(--speaking)"></div><div class="cyc-dot" style="background:var(--speaking);opacity:.5"></div><div class="cyc-dot" style="background:var(--speaking);opacity:.25"></div></div>
+    </div>
+  </div>
 
-            // Find first day (24 Apr 2026)
-            let current = new Date(startDate);
+  <!-- CALENDAR -->
+  <h2 class="sec-title">📅 Календарь подготовки</h2>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--listening)"></div>Listening</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--reading)"></div>Reading</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--writing)"></div>Writing</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--speaking)"></div>Speaking</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--full)"></div>Full Mock</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--secondary)"></div>Exam Day</div>
+  </div>
+  <div class="cal-wrap"><div class="cal-grid" id="calendar"></div></div>
 
-            // Adjust to start of week (Monday)
-            const dayOfWeek = current.getDay(); // 0=Sun, 1=Mon...
-            const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-            current.setDate(current.getDate() - daysFromMonday);
+  <!-- WEEKLY PLAN -->
+  <h2 class="sec-title">📋 Недельный план</h2>
+  <div class="week-tabs" id="weekTabs"></div>
+  <div class="week-panel" id="weekPanel"></div>
 
-            // Generate 10 weeks (70 days)
-            for (let i = 0; i < 70; i++) {
-                const cellDate = new Date(current);
-                const isInRange = cellDate >= startDate && cellDate <= examDate;
-                const dayOfWeekIdx = cellDate.getDay() === 0 ? 6 : cellDate.getDay() - 1;
+  <!-- STRATEGIES -->
+  <h2 class="sec-title">💡 Стратегии по секциям</h2>
+  <div class="strat-grid">
+    <div class="strat-card">
+      <h4>🎧 Listening 6.0 → 7.5</h4>
+      <ul>
+        <li>Читай вопросы ДО прослушивания — predict тип ответа</li>
+        <li>Разные акценты: British, Australian, American — Cambridge 13–18</li>
+        <li>Ежедневно в дороге: BBC 6 Minute English (Part 1–2 уровень)</li>
+        <li>Проверяй орфографию — частая ошибка на -1 балл</li>
+        <li>Фокус на S3 & S4 — academic, самые сложные</li>
+        <li>После теста читай транскрипты, выписывай новые фразы</li>
+      </ul>
+    </div>
+    <div class="strat-card">
+      <h4>📖 Reading 5.5 → 7.5</h4>
+      <ul>
+        <li>Skimming: первое + последнее предложение абзаца за 3 мин</li>
+        <li>TFNG: False = противоречит тексту, Not Given = не упоминается</li>
+        <li>Matching Headings: читай весь абзац → main idea → заголовок</li>
+        <li>Timing: строго 20 мин на текст, цель — закончить за 55 мин</li>
+        <li>Учи парафразы — IELTS всегда использует синонимы</li>
+        <li>Scanning: ищи ключевые слова, не читай всё подряд</li>
+      </ul>
+    </div>
+    <div class="strat-card">
+      <h4>✍️ Writing T1 5.5 → 7.0</h4>
+      <ul>
+        <li>Overview — самый важный параграф, пиши его 2-м (не 1-м!)</li>
+        <li>Выбирай 3–4 ключевых тренда, не описывай каждое число</li>
+        <li>Vocabulary: surge, plummet, fluctuate, plateau, remain stable</li>
+        <li>Сравнивай группы данных, а не перечисляй по очереди</li>
+        <li>150–180 слов идеально. Больше 200 = потеря времени на T2</li>
+        <li>Практикуй все типы: line, bar, pie, table, map, process</li>
+      </ul>
+    </div>
+    <div class="strat-card">
+      <h4>📝 Writing T2 5.5 → 7.0</h4>
+      <ul>
+        <li>5 мин планирование ОБЯЗАТЕЛЬНО. Никогда не пиши без структуры</li>
+        <li>Структура: Intro → Body 1 → Body 2 → Conclusion</li>
+        <li>Каждый Body: Topic sentence → Explain → Example</li>
+        <li>Conditionals, relative clauses, passive voice = грамматика 7+</li>
+        <li>260–280 слов идеально. Varied linking words = Cohesion 7</li>
+        <li>Типы: Opinion, Discussion, Problem-Solution, Double Question</li>
+      </ul>
+    </div>
+    <div class="strat-card">
+      <h4>🗣️ Speaking 6.0 → 7.5</h4>
+      <ul>
+        <li>Part 1: прямой ответ + 1–2 предложения расширения, без пауз</li>
+        <li>Part 2: ВСЮ 1 мин подготовки — записывай 5 ключевых слов</li>
+        <li>Part 2 структура: Intro → Детали → Прошлое → Мнение/Чувства</li>
+        <li>Part 3: обобщённые ответы. "People tend to..." — не личное</li>
+        <li>Записывай себя каждый день — слушай и находи повторы слов</li>
+        <li>Idioms — только естественные, не вставные. Authenticity wins.</li>
+      </ul>
+    </div>
+    <div class="strat-card">
+      <h4>⚡ Режим дня и продуктивность</h4>
+      <ul>
+        <li>05:40–07:00 — утренняя сессия. Свежий мозг = лучшая учёба!</li>
+        <li>Дневной сон 13:00–16:00 критически важен для памяти</li>
+        <li>Основной блок 16:00–21:00 — 5 часов структурированной учёбы</li>
+        <li>Тренировка (Пн–Сб) реально улучшает концентрацию</li>
+        <li>Pomodoro: 25 мин фокуса → 5 мин отдыха → повтор</li>
+        <li>Ужин в 20:00. Не учись сразу — 15 мин пауза, потом повтор</li>
+      </ul>
+    </div>
+  </div>
 
-                const cell = document.createElement('div');
-                cell.className = 'day-cell';
+  <!-- RESOURCES -->
+  <div class="res-box">
+    <h3>🎓 Ресурсы под новую стратегию</h3>
+    <div class="res-grid">
+      <div>
+        <div class="res-grp-title">📚 Книги (базовые)</div>
+        <div class="res-item">Cambridge IELTS 13–18 (официальные тесты)</div>
+        <div class="res-item">Vocabulary for IELTS — Collins</div>
+        <div class="res-item">Writing for IELTS — Collins</div>
+      </div>
+      <div>
+        <div class="res-grp-title">🌐 Сайты</div>
+        <div class="res-item">ieltsliz.com — все типы вопросов</div>
+        <div class="res-item">ielts-simon.com — Writing эссе</div>
+        <div class="res-item">ieltsadvantage.com — стратегии</div>
+      </div>
+      <div>
+        <div class="res-grp-title">🎧 Аудио (по уровням)</div>
+        <div class="res-item">BBC 6 Minute English (S1–S2)</div>
+        <div class="res-item">TED Talks (S3–S4 уровень)</div>
+        <div class="res-item">IELTS Liz — Listening playlist (YouTube)</div>
+      </div>
+      <div>
+        <div class="res-grp-title">📱 Приложения</div>
+        <div class="res-item">British Council IELTS Prep</div>
+        <div class="res-item">Cambridge Write &amp; Improve (AI feedback)</div>
+        <div class="res-item">ELSA Speak (Speaking pronunciation AI)</div>
+      </div>
+    </div>
+  </div>
 
-                if (!isInRange) {
-                    cell.style.opacity = '0.3';
-                } else {
-                    const dayType = getDayType(dayOfWeekIdx);
-                    cell.classList.add(dayType);
+  <footer>
+    Собран специально под твой режим &nbsp;•&nbsp; <strong>67 дней = 7.5 band</strong> &nbsp;•&nbsp; Ты можешь это сделать! 🚀
+  </footer>
+</div>
 
-                    const weekNum = Math.floor((cellDate - startDate) / (7 * 24 * 60 * 60 * 1000));
-                    const weekDay = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'][dayOfWeekIdx];
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle">День</h2>
+      <button class="m-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
 
-                    if (weekNum >= 0 && weekNum < weekData.length && weekData[weekNum].days[weekDay]) {
-                        const dayData = weekData[weekNum].days[weekDay];
-                        const badge = document.createElement('div');
-                        badge.className = `day-badge badge-${dayData.badge}`;
-                        cell.appendChild(badge);
-                    }
+<script>
+// ================================================================
+// DATA
+// ================================================================
+const START = new Date('2026-04-24T00:00:00');
+const EXAM  = new Date('2026-06-30T00:00:00');
+const TOTAL = 67;
 
-                    if (cellDate.getTime() === examDate.getTime()) {
-                        cell.classList.add('exam');
-                    }
+const BC = {listening:'#3b82f6',reading:'#8b5cf6',writing:'#f59e0b',speaking:'#10b981',full:'#ef4444'};
 
-                    cell.onclick = () => openModal(cellDate, weekNum, weekDay);
-                }
+// Weeks: array index = weekNum (floor((date-START)/7days))
+// Each week has 7 day entries [0..6] = Mon..Sun
+// Apr 24 is a Friday, so weekNum=0 has Fri(idx4),Sat(idx5),Sun(idx6) in range
+const WEEKS = [
+  {
+    theme:"Неделя 1 — Kickoff: Формат IELTS + Режим дня",
+    goals:"Первые 3 дня: понять формат всех секций, установить режим сна и учёбы. Первый диагностический мок для определения стартового уровня.",
+    color:"#00c8f0",
+    days:[
+      {focus:"",badge:"listening",cycle:"",task:""},// Mon Apr 20 — before start
+      {focus:"",badge:"listening",cycle:"",task:""},// Tue Apr 21 — before start
+      {focus:"",badge:"listening",cycle:"",task:""},// Wed Apr 22 — before start
+      {focus:"",badge:"listening",cycle:"",task:""},// Thu Apr 23 — before start
+      {focus:"Listening: формат S1–S4 + первый мок", badge:"listening",cycle:"День 1",task:"Изучить структуру IELTS Listening: S1 (form fill), S2 (maps), S3 (discussion), S4 (lecture). Cambridge 18 Test 1 S1 (10 мин). Разбор. Выучить 20 слов."},
+      {focus:"Reading: Skimming & Scanning + TFNG intro", badge:"reading",cycle:"День 2",task:"Стратегия skimming: читай 1-е и последнее предложение абзаца (3 мин на текст). True/False/Not Given: разница между False и Not Given. Cambridge 18 Reading P1 (20 мин)."},
+      {focus:"Writing T1+T2 структура + Speaking intro", badge:"writing",cycle:"День 3",task:"Writing T1: Overview + 2 Body параграфа. Writing T2: 4-параграфная структура (Intro→Body1→Body2→Conclusion). Speaking: Part 1 — 5 тем. Запись себя. Общий разбор формата."}
+    ]
+  },
+  {
+    theme:"Неделя 2 — Listening S1-S2 + Reading MC/Short Answer",
+    goals:"3-дневный цикл Listening (S1–S2) + Reading базовые типы. Стратегия prediction и skimming. Цель: S1-2 — 90%+, Reading MC — 80%+.",
+    color:"#3b82f6",
+    days:[
+      {focus:"Listening S1: Form completion + Note-taking", badge:"listening",cycle:"L цикл день 1",task:"Prediction strategy: читай вопросы до аудио, предугадывай тип (число, имя, дата). Cambridge 17 Test 1 S1 (разбор). Writing T1 maintenance: 1 line graph (20 мин). Выучить 20 слов."},
+      {focus:"Reading: Multiple Choice strategy + practice", badge:"reading",cycle:"L+R цикл день 2",task:"MC Strategy: locate key info → eliminate wrong options → choose. Cambridge 17 Reading P1 (20 мин строго по таймеру). Разбор distractors. Гигиена 18:30–19:30."},
+      {focus:"Listening S2: Maps & Diagrams labeling", badge:"listening",cycle:"L цикл день 3",task:"S2: понять layout карты/схемы до прослушивания. Cambridge 17 S2 (разбор). Speaking T2 maintenance: 1 cue card (describe a place, 2 мин). Лексика направлений."},
+      {focus:"L+R Mini-Mock: S1-S2 + Reading P1 (timed)", badge:"full",cycle:"Mock день",task:"Cambridge 16 Test 1 S1–S2 (20 мин) + Reading P1 (20 мин). Exam conditions: тишина, таймер. Сразу разбор ошибок. Writing T1: bar chart эссе за 20 мин."},
+      {focus:"Reading: Short Answer + Sentence Completion", badge:"reading",cycle:"R цикл день 1",task:"Short answer: locate → paraphrase → answer (не более слов чем сказано!). Sentence completion: grammatical fit. Cambridge 16 Reading P2 (20 мин). Vocabulary 20 слов."},
+      {focus:"Listening S1-S2 Full + Speaking Part 1", badge:"listening",cycle:"L цикл / Speaking",task:"Cambridge 16 Test 2 S1–S2 (20 мин). После — Speaking Part 1: 10 тем (home, study, food, hobbies, music, travel). Запись 15 мин. ELSA Speak pronunciation. Гигиена 18:30–19:30."},
+      {focus:"Full Mock: Cambridge 17 L+R + Writing T2 plan", badge:"full",cycle:"Воскресенье Mock",task:"Cambridge 17 Test 2: Listening (40 мин) + Reading P1–P2 (40 мин). Разбор ошибок. Writing T2: составить план Opinion Essay (без написания). Отдых!"}
+    ]
+  },
+  {
+    theme:"Неделя 3 — Listening S3-S4 + Reading Matching/Headings",
+    goals:"Самые сложные типы Listening и Reading. S3–S4: academic discourse. Matching Headings: стратегия topic sentence. Цель: S3–4 75%+.",
+    color:"#8b5cf6",
+    days:[
+      {focus:"Listening S3: Academic Discussion (MC x2)", badge:"listening",cycle:"L цикл день 1",task:"S3: students/lecturer. Multiple choice — внимание на distractors (первый ответ часто ловушка). Cambridge 16 S3 (разбор). Writing T1: pie chart essay (20 мин). 20 academic слов."},
+      {focus:"Reading: Matching Headings + Paragraph Info", badge:"reading",cycle:"R цикл день 1",task:"Headings: читай абзац целиком → найди main idea → сопоставь заголовок. Cambridge 16 Reading P2 (25 мин). Paragraph matching: scan для specific info. Гигиена 18:30–19:30."},
+      {focus:"Listening S4: Academic Lecture + note-taking", badge:"listening",cycle:"L цикл день 2",task:"S4: Note-completion strategy. Слушай структуру лекции. Cambridge 16 S4 (разбор транскрипта). Speaking Part 2: 3 cue cards (describe a person, place, event). Запись."},
+      {focus:"L+R Full Mock: S3-S4 + Reading P2-P3", badge:"full",cycle:"Mock день",task:"Cambridge 15 Test 1 S3–S4 (20 мин) + Reading P2–P3 (40 мин). Жёсткий таймер. Разбор. Цель: S3–4 75%+, Reading 30+/40. Writing T2: Discussion Essay план + 1 body paragraph."},
+      {focus:"Reading: True/False/Not Given deep focus", badge:"reading",cycle:"R цикл день 2",task:"TFNG deep dive: False = contradicts. Not Given = not mentioned at all. Cambridge 15 Reading P1 TFNG section. Цель: 0 ошибок в TFNG. Объяснить себе каждый ответ письменно."},
+      {focus:"Listening S1–S4 Full Test + Speaking Part 2", badge:"listening",cycle:"L цикл день 3",task:"Cambridge 15 Test 2 Listening полностью (40 мин). После — читать транскрипты 15 мин. Speaking Part 2: 2-минутный монолог x3. Запись + разбор. Гигиена 18:30–19:30."},
+      {focus:"Full Mock: Cambridge 16 Test 2 + Writing T2", badge:"full",cycle:"Воскресенье Mock",task:"Cambridge 16 Test 2: Listening + Reading (90 мин). Подробный разбор. Writing T2: написать Opinion Essay (250 слов, 40 мин). Self-check по checklist. Отдых!"}
+    ]
+  },
+  {
+    theme:"Неделя 4 — L&R Full Tests + Writing T2 Intensive",
+    goals:"Закрепление L+R в exam conditions. Все типы Writing T2. Цель: L 34+/40, R 32+/40, Writing T2 — уверенная структура 7.0.",
+    color:"#ef4444",
+    days:[
+      {focus:"Full Listening: Cambridge 15 Test 1 S1–S4", badge:"full",cycle:"Mock день 1",task:"Cambridge 15 Test 1 Listening полностью (40 мин). Только 1 прослушивание, никаких пауз. После — транскрипты 20 мин. Writing T1: table essay (20 мин). Выписать 15 новых фраз из транскрипта."},
+      {focus:"Reading Full Test + TFNG vs False revision", badge:"reading",cycle:"R цикл",task:"Cambridge 15 Test 1 Reading (60 мин цель: 55 мин). TFNG revision: перепроверь каждый False — действительно ли противоречит тексту. Разбор ошибок. Гигиена 18:30–19:30."},
+      {focus:"Writing T2: Problem-Solution + Advantages-Disadvantages", badge:"writing",cycle:"W цикл день 1",task:"Problem-Solution: Problem→Cause→Solution→Evaluation. Adv-Disadv: взвешенное мнение в Conclusion. Написать 1 Prob-Sol Essay (40 мин). Структура + примеры."},
+      {focus:"Full L+R Mock: Cambridge 15 Test 2", badge:"full",cycle:"Mock день",task:"Cambridge 15 Test 2 Listening (40 мин) + Reading (60 мин). Exam conditions: тишина, таймер. Сразу разбор ошибок. Цель: Listening 34+/40, Reading 32+/40. Анализ паттернов ошибок."},
+      {focus:"Writing T2: Double Question + Advanced Linking", badge:"writing",cycle:"W цикл день 2",task:"Double Question: отвечать на ОБА вопроса равномерно. Написать 1 Double Q Essay (40 мин). Linking words diversity: Furthermore, Nevertheless, Consequently, Albeit, Notwithstanding. List."},
+      {focus:"Full Writing Mock: T1+T2 timed (60 мин)", badge:"writing",cycle:"W цикл день 3 + Speaking",task:"T1 (20 мин) + T2 (40 мин) без остановок. Self-check: word count, overview, structure. Speaking Part 3: 10 abstract questions. Записать ответы 4–5 предложений. Гигиена 18:30–19:30."},
+      {focus:"MEGA Mock: Listening + Reading + Writing (2.5 ч)", badge:"full",cycle:"Воскресенье MEGA",task:"Cambridge 15 Test 3: Listening (40) + Reading (60) + Writing T1+T2 (60) = 2.5 часа. Как настоящий экзамен. Честная самооценка. Сравни с Неделей 1. Отдых вечером!"}
+    ]
+  },
+  {
+    theme:"Неделя 5 — Writing T1 Intensive: Все типы графиков",
+    goals:"Отработать ВСЕ типы Writing T1. Каждый день — новый тип + написать эссе. Цель: 7.0 по Task Achievement и Coherence.",
+    color:"#f59e0b",
+    days:[
+      {focus:"Writing T1: Line Graph + Bar Chart (сравнение)", badge:"writing",cycle:"W цикл день 1",task:"Revision vocabulary: rise sharply, decrease gradually, peak at, bottom out. Line Graph Essay (20 мин). Bar Chart: сравнение групп (men vs women, 2020 vs 2025). Essay (20 мин). Overview обязательно!"},
+      {focus:"Writing T1: Pie Chart + Table (proportion)", badge:"writing",cycle:"W цикл день 2",task:"Pie: proportion language — the majority (55%), a minority, accounts for, makes up. Table: выбирай самые заметные различия. 2 эссе за 40 мин. 10 новых comparison phrases. Гигиена 18:30–19:30."},
+      {focus:"Writing T1: Maps (before/after) + Process Diagram", badge:"writing",cycle:"W цикл день 3",task:"Maps: location language (to the north, adjacent to), change language (has been replaced by, an area of woodland has been cleared). Process: passive voice + sequencing. 2 эссе за 40 мин."},
+      {focus:"Writing T1 Timed Mock (неизвестный тип)", badge:"full",cycle:"Mock день",task:"Незнакомый graph type (no prep). Строго 20 мин. Self-check: 150+ слов, overview, grouping, vocabulary variety. Разбор с IELTS 7 эталоном. Listening: Cambridge 14 Test 1 S1–S2 (20 мин)."},
+      {focus:"Listening S1–S4 Full + Reading Headings revision", badge:"listening",cycle:"L+R",task:"Cambridge 14 Test 1 Listening (40 мин). Cambridge 14 Reading P1 (20 мин) — только Matching Headings секция. Разбор. Vocabulary: 20 academic слов для Writing."},
+      {focus:"Speaking: Full Mock Part 1–2–3 с записью", badge:"speaking",cycle:"Speaking Mock",task:"Полный Speaking mock (15 мин, запись). После — разбор: паузы, повторяющиеся слова, vocabulary range, complex sentences. Исправить 3 главных ошибки. Гигиена 18:30–19:30."},
+      {focus:"Full Mock + Error Notebook Review (5 недель)", badge:"full",cycle:"Воскресенье Review",task:"Cambridge 14 Test 2 Listening + Reading (90 мин). После — перечитать тетрадь ошибок за 5 недель. Какие ошибки повторяются? Определить 2 главных слабых места. Отдых!"}
+    ]
+  },
+  {
+    theme:"Неделя 6 — Writing T2 Intensive + Speaking Fluency",
+    goals:"Все типы T2 эссе с advanced vocabulary. Speaking: natural fluency + complex grammar. Цель: Writing 7.0 по всем 4 критериям.",
+    color:"#10b981",
+    days:[
+      {focus:"Writing T2: Advanced Opinion Essay (nuanced)", badge:"writing",cycle:"W цикл день 1",task:"Nuanced vocabulary: albeit, nevertheless, exemplify, advocate. Soften opinion: While I generally agree… it is important to acknowledge... Написать Opinion Essay 260 слов (40 мин). Self-check все 4 критерия."},
+      {focus:"Writing T2: Discussion + Reading Full Test", badge:"writing",cycle:"W цикл день 2",task:"Discussion: Body 1 = View A + аргументы. Body 2 = View B + твоё мнение. Написать 270 слов (40 мин). Cambridge 14 Reading P2 (20 мин). Гигиена 18:30–19:30."},
+      {focus:"Full Writing Mock: T1+T2 timed + Listening S3–S4", badge:"full",cycle:"Mock день",task:"T1+T2 (60 мин без остановок). Cambridge 14 Test 3 S3–S4 (20 мин). Анализ: где потерял время? Где потерял очки? Attitude words в Listening: skeptical, enthusiastic, concerned."},
+      {focus:"Listening S1–S4 Full Test + Speaking idiomatic", badge:"listening",cycle:"L+Speaking",task:"Cambridge 14 Test 4 Listening (40 мин). Speaking: 10 natural idioms (it's a double-edged sword, there's no one-size-fits-all). Conditionals в Speaking: Had I known earlier, I would have... Запись 20 мин."},
+      {focus:"Reading: Speed Reading + Inference Questions", badge:"reading",cycle:"R цикл",task:"Cambridge 13 Test 1 Reading (цель: 50 мин вместо 60). Inference questions: что автор подразумевает? Tone и attitude. Разбор. Writing T2: Problem-Solution mini-plan (5 мин без написания)."},
+      {focus:"Speaking: Full Mock + Peer Feedback", badge:"speaking",cycle:"Speaking Mock",task:"15-минутный Speaking mock с другом или запись. Feedback: Fluency (F), Vocabulary (V), Grammar (G), Pronunciation (P) — 4 критерия IELTS. Self-score каждого. Гигиена 18:30–19:30."},
+      {focus:"MEGA Mock: Cambridge 14 Test 4 (все секции)", badge:"full",cycle:"Воскресенье MEGA",task:"Cambridge 14 Test 4: Listening + Reading + Writing T1+T2 = 2ч 40 мин. Полная симуляция экзамена. Честная самооценка. Сравни с результатами Недели 4. Отдых!"}
+    ]
+  },
+  {
+    theme:"Неделя 7 — Peak Performance: Daily Simulation",
+    goals:"Каждый день — exam conditions. Выработать стабильность результата. Цель: L 35+/40, R 34+/40, Writing 7.0 consistently.",
+    color:"#ef4444",
+    days:[
+      {focus:"Full Listening + Writing T1+T2 timed", badge:"full",cycle:"Sim день 1",task:"Cambridge 13 Test 1 Listening полностью (40 мин). Writing T1+T2 (60 мин). Строгий таймер. После — анализ: где потерял время? Записать 3 вещи которые сделал хорошо."},
+      {focus:"Full Reading + Speaking Full Mock", badge:"full",cycle:"Sim день 2",task:"Cambridge 13 Test 1 Reading полностью (55 мин цель). Speaking Full Mock (15 мин, запись). Разбор записи: vocabulary range, complex grammar, fluency. Гигиена 18:30–19:30."},
+      {focus:"Full Listening + Writing (Cambridge 13 Test 2)", badge:"full",cycle:"Sim день 3",task:"Cambridge 13 Test 2 Listening (40 мин) + Writing T1+T2 (60 мин). Тишина, никаких телефонов. Анализ паттернов ошибок. Что повторяется из недели в неделю?"},
+      {focus:"Full Reading + Speaking Part 3 Deep Dive", badge:"full",cycle:"Sim день 4",task:"Cambridge 13 Test 2 Reading (55 мин цель). Speaking Part 3: 15 сложных abstract вопросов (Why do people...? What impact does...? To what extent...?). Записать ответы. Разбор."},
+      {focus:"Full Listening + Writing (Cambridge 13 Test 3)", badge:"full",cycle:"Sim день 5",task:"Cambridge 13 Test 3 Listening + Writing T1+T2. Фокус на timing: T1 ровно 20 мин (не больше!), T2 ровно 40 мин. Проверь word count. Advanced vocabulary в Writing T2."},
+      {focus:"Full Reading + Advanced Vocabulary Review", badge:"full",cycle:"Sim день 6",task:"Cambridge 13 Test 3 Reading (55 мин цель). После: просмотреть весь vocabulary list — что забыл? 50 advanced academic words revision (Collocations: conduct research, address issues, tackle problems). Гигиена 18:30–19:30."},
+      {focus:"MEGA MOCK: Все 4 секции (2ч 45 мин)", badge:"full",cycle:"Воскресенье MEGA",task:"Listening (40) + Reading (60) + Writing (60) = 2ч 40 мин. Как настоящий экзамен. Оценить честно. Сравни с Неделей 1 — разница должна быть заметной! Отдых и гордись собой."}
+    ]
+  },
+  {
+    theme:"Неделя 8 — Advanced Band 7.5+ Strategies",
+    goals:"Sophistication в языке. Idiomatic expressions. Complex grammar structures. Натуральность. Цель: звучать как 7.5, а не 6.5.",
+    color:"#8b5cf6",
+    days:[
+      {focus:"Writing: Advanced vocabulary + Sophisticated arguments", badge:"writing",cycle:"Advanced день 1",task:"Vocabulary upgrade: albeit, notwithstanding, exemplify, advocate, encompass. Writing T2: аргументация с уступками — 'While X has merit, it is important to acknowledge Y'. 1 эссе 280 слов."},
+      {focus:"Reading: Speed + Inference + Attitude questions", badge:"reading",cycle:"Advanced день 2",task:"Cambridge 14 Test 1 Reading (цель: 50 мин). Inference: что автор подразумевает? Attitude: скептичен? Оптимистичен? Tone questions. Разбор. Гигиена 18:30–19:30."},
+      {focus:"Listening: Inference + Speaker Attitude (S3–S4)", badge:"listening",cycle:"Advanced день 3",task:"Cambridge 14 Test 2 Listening S3–S4. Attitude words: skeptical, enthusiastic, concerned, reluctant, optimistic. Что speaker подразумевает (не говорит прямо)? Разбор каждого attitude вопроса."},
+      {focus:"Speaking: Advanced Grammar structures", badge:"speaking",cycle:"Advanced Speaking",task:"Inversion: Not only did I..., Hardly had I... Cleft sentences: What I find fascinating is... Participle: Having studied in detail... Записать себя, 20 мин — использовать каждую структуру. Разбор."},
+      {focus:"Full Writing Mock + Reading Speed push", badge:"full",cycle:"Sim",task:"Writing T1+T2 (60 мин). Cambridge 14 Test 3 Reading (50 мин цель). Где замедлился? Какие вопросы самые сложные лично для тебя? Составить план улучшения на Неделю 9."},
+      {focus:"Full Listening + Speaking Final Mock", badge:"full",cycle:"Sim + Speaking",task:"Cambridge 14 Test 4 Listening (40 мин). Speaking Full Mock (15 мин, запись). Один из последних репетиций — анализируй тщательно: F, V, G, P каждое отдельно. Гигиена 18:30–19:30."},
+      {focus:"Full Mock: Cambridge 13 Test 4 (все секции)", badge:"full",cycle:"Воскресенье MEGA",task:"Последний большой Mock до финального рывка: Listening + Reading + Writing (2ч 40 мин). Сравни с Неделями 4 и 7. Готов ли к 7.5? Определи последние слабые места."}
+    ]
+  },
+  {
+    theme:"Неделя 9 — Final Intensive Push (последний рывок)",
+    goals:"Максимум практики. Закрыть последние слабые места. Уверенность через повторение успехов. Начинай снижать нагрузку в конце.",
+    color:"#ef4444",
+    days:[
+      {focus:"Full Listening + Writing T1 Focus (3 типа)", badge:"full",cycle:"Final день 1",task:"Cambridge 12 Test 1 Listening (40 мин). Writing T1: 3 разных типа за 60 мин (20 мин каждый). Быстрый overview, ключевые тренды, точный vocabulary. Цель: автоматизм в T1."},
+      {focus:"Full Reading + Speaking Part 3 Deep Practice", badge:"full",cycle:"Final день 2",task:"Cambridge 12 Test 1 Reading (55 мин цель). Speaking Part 3: 20 самых сложных abstract вопросов. 30 мин записи. Разбор: quality of arguments > vocabulary. Гигиена 18:30–19:30."},
+      {focus:"Full Writing T2 Focus (2 эссе) + Listening", badge:"full",cycle:"Final день 3",task:"Writing T2: 2 эссе разных типов (Opinion + Double Q) за 80 мин. Cambridge 12 Test 2 S3–S4 (20 мин). Analyse S4 transcript — academic vocabulary для Writing."},
+      {focus:"Full Reading + Writing Review + Vocabulary", badge:"full",cycle:"Final день 4",task:"Cambridge 12 Test 2 Reading (60 мин). Перечитать все свои лучшие эссе. Vocabulary revision: 100 самых важных слов списка. Ранний отбой. Завтра начинается taper."},
+      {focus:"TAPER: Лёгкий Listening + Speaking warm-up", badge:"listening",cycle:"Taper день 1",task:"30 мин лёгкого Listening (BBC подкаст — не тест!). 15 мин Speaking Part 1 любимые темы. НЕ делай ничего нового и сложного. Ты уже знаешь всё что нужно."},
+      {focus:"TAPER: Документы + лёгкое чтение", badge:"reading",cycle:"Taper день 2",task:"20 мин чтение статьи на английском (NYT, BBC, не IELTS). Подготовить все документы для экзамена. Маршрут до центра. Что взять с собой. Ранний сон. Гигиена 18:30–19:30."},
+      {focus:"TAPER: Speaking warm-up + ранний сон", badge:"speaking",cycle:"Taper день 3",task:"15 мин Speaking Part 1–2 любимые темы. Повторить Part 2 лучшие cue cards. Никаких новых материалов! Лечь спать строго в 21:00. Экзамен послезавтра."}
+    ]
+  },
+  {
+    theme:"Неделя 10 — Exam Days (29–30 июня 2026)",
+    goals:"Ты готовился 67 дней. Сегодня просто покажи то, что умеешь. Фокус, спокойствие, стратегия.",
+    color:"#f59e0b",
+    days:[
+      {focus:"Pre-Exam Day — полный отдых", badge:"speaking",cycle:"Pre-Exam",task:"НЕ учиться вообще. Прогулка, лёгкий завтрак, любимый фильм. Просмотреть Speaking Part 1 любимые темы 10 мин. Лечь спать в 20:30. Документы готовы? Маршрут знаешь?"},
+      {focus:"🎯 ДЕНЬ ЭКЗАМЕНА IELTS!", badge:"full",cycle:"EXAM",task:"05:20 — подъём. Лёгкий завтрак. Приехать за 30 мин. Listening (40) → Reading (60) → Writing (60) → Speaking. Доверься 67 дням работы. Ты справишься. 7.5 — твоё!"},
+      {focus:"После экзамена — отдых",badge:"speaking",cycle:"—",task:"Результаты через 13 дней. Ты сделал всё возможное. Отдыхай и гордись собой!"},
+      {focus:"",badge:"speaking",cycle:"",task:""},
+      {focus:"",badge:"speaking",cycle:"",task:""},
+      {focus:"",badge:"speaking",cycle:"",task:""},
+      {focus:"",badge:"speaking",cycle:"",task:""}
+    ]
+  }
+];
 
-                const num = document.createElement('div');
-                num.className = 'day-number';
-                num.textContent = cellDate.getDate();
-                cell.appendChild(num);
+// Daily schedule generator
+function getDaySchedule(dow) {
+  // dow = 0(Sun)..6(Sat)
+  const isSchool  = dow >= 1 && dow <= 5;
+  const isSun     = dow === 0;
+  const hasTrain  = dow !== 0;
+  const hasHygiene= [2,4,6].includes(dow);
 
-                const wd = document.createElement('div');
-                wd.className = 'day-weekday';
-                wd.textContent = dayNames[dayOfWeekIdx];
-                cell.appendChild(wd);
+  const base = [
+    {t:"05:20",i:"⏰",title:"Подъём",d:"Умывание, лёгкий завтрак. Подготовка к утренней сессии."},
+    {t:"05:40–07:00",i:"📚",title:"Утренняя учёба (1ч 20мин)",d:isSun?"Speaking practice / Vocabulary / Listening podcast. Без давления — воскресенье!":"Listening 30 мин + Vocabulary 25 мин + Speaking practice 25 мин. Свежий мозг = лучшая учёба!"}
+  ];
 
-                if (isInRange) {
-                    const weekNum = Math.floor((cellDate - startDate) / (7 * 24 * 60 * 60 * 1000));
-                    const weekDay = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'][dayOfWeekIdx];
-                    if (weekNum >= 0 && weekNum < weekData.length && weekData[weekNum].days[weekDay]) {
-                        const focus = document.createElement('div');
-                        focus.className = 'day-focus';
-                        focus.textContent = weekData[weekNum].days[weekDay].focus;
-                        cell.appendChild(focus);
-                    }
-                }
+  if (isSchool) {
+    base.push(
+      {t:"07:00–07:45",i:"🎧",title:"Дорога в школу (45 мин)",d:"ОБЯЗАТЕЛЬНО: BBC 6 Minute English или TED Talks в наушниках."},
+      {t:"08:00–13:00",i:"🏫",title:"Школа (6 уроков)",d:"Фокус на школе. В переменах — повторяй vocabulary cards."},
+      {t:"13:00–16:00",i:"😴",title:"Обед + Дневной сон",d:"ОБЯЗАТЕЛЬНО! 3 часа. Мозг обрабатывает утреннюю информацию. Не жертвуй сном — это часть стратегии!"}
+    );
+  } else if (!isSun) {
+    base.push(
+      {t:"07:00–12:00",i:"☀️",title:"Свободное время",d:"Лёгкие активности, прогулка. Не перенапрягайся до основного блока."},
+      {t:"13:00–16:00",i:"😴",title:"Дневной сон",d:"3 часа отдыха. Критически важно! Не пропускай."}
+    );
+  } else {
+    base.push(
+      {t:"07:00–13:00",i:"☀️",title:"Свободное время / отдых",d:"Воскресенье — лёгкий день. Прогулка, чтение на английском без давления."},
+      {t:"13:00–16:00",i:"😴",title:"Дневной сон",d:"3 часа. Воскресенье без тренировки — максимум учёбы в основном блоке."}
+    );
+  }
 
-                calendar.appendChild(cell);
-                current.setDate(current.getDate() + 1);
-            }
-        }
+  base.push({t:"16:00–17:00",i:"📖",title:"Учёба — Блок 1 (1 час)",d:"Самое важное задание дня. Listening или Reading — тип вопроса по плану."});
 
-        function getDayType(dayIdx) {
-            // 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
-            if (dayIdx === 6) return 'chill';
-            if ([1, 3, 5].includes(dayIdx)) return 'training'; // Tue, Thu, Sat
-            return 'school'; // Mon, Wed, Fri
-        }
+  if (hasTrain) {
+    base.push({t:"17:00–18:30",i:"🏃",title:"Тренировка (1.5 часа)",d:"Спорт улучшает концентрацию и память. Обязательно — это часть плана!"});
+    if (hasHygiene) {
+      base.push({t:"18:30–19:30",i:"🚿",title:"Гигиена (1 час)",d:"Душ, личная гигиена. Вт / Чт / Сб."});
+      base.push({t:"19:30–20:00",i:"📖",title:"Учёба — Блок 2 (30 мин)",d:"Writing plan или Speaking practice. Быстро но продуктивно."});
+    } else {
+      base.push({t:"18:30–20:00",i:"📖",title:"Учёба — Блок 2 (1.5 часа)",d:"Writing Task 1 или Task 2 (timed). Или Reading full text с разбором."});
+    }
+  } else {
+    base.push({t:"17:00–20:00",i:"📖",title:"Учёба — Блок 2 (3 часа)",d:"Воскресенье — нет тренировки! Writing (1ч) + Speaking (30м) + Review (1.5ч)."});
+  }
 
-        // Modal
-        function openModal(date, weekNum, weekDay) {
-            const modal = document.getElementById('modal');
-            const title = document.getElementById('modal-title');
-            const body = document.getElementById('modal-body');
+  base.push(
+    {t:"20:00–20:30",i:"🍽️",title:"Ужин (30 мин)",d:"Лёгкий ужин. Пауза 15 мин после еды — не учись сразу."},
+    {t:"20:30–21:00",i:"📝",title:"Вечерний повтор (30 мин)",d:"Vocabulary карточки, разбор ошибок дня, Speaking 5 мин вслух."},
+    {t:"21:00",i:"💤",title:"Сон",d:"Строго! 8ч 20мин (до 05:20). Телефон — за 30 мин до сна. Мозг закрепляет всё ночью."}
+  );
+  return base;
+}
 
-            const isExam = date.getTime() === examDate.getTime();
-            const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'long' });
+// ================================================================
+// COUNTDOWN
+// ================================================================
+function updateCD(){
+  const diff = EXAM - new Date();
+  if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');return}
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
 
-            title.textContent = isExam ? '🎯 ' + dateStr + ' — ДЕНЬ ЭКЗАМЕНА!' : dateStr;
+// ================================================================
+// PROGRESS
+// ================================================================
+function updateProgress(){
+  const now=new Date();
+  const days=Math.max(0,Math.min(Math.floor((now-START)/86400000),TOTAL));
+  const pct=Math.round(days/TOTAL*100);
+  document.getElementById('progVal').textContent=`${days} / ${TOTAL} дней`;
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progPct').textContent=pct+'% пройдено';
+}
 
-            let scheduleHTML = '';
+// ================================================================
+// TODAY
+// ================================================================
+function updateToday(){
+  const now=new Date();
+  const opts={weekday:'long',day:'numeric',month:'long'};
+  const dateStr=now.toLocaleDateString('ru-RU',opts);
+  document.getElementById('todayLabel').textContent=dateStr;
+  const sched=getDaySchedule(now.getDay()).slice(0,7);
+  const cols=['#00c8f0','#3b82f6','#f59e0b','#10b981','#8b5cf6','#ef4444','#f59e0b'];
+  document.getElementById('todaySched').innerHTML=sched.map((s,i)=>`
+    <div class="today-row">
+      <div class="today-dot" style="background:${cols[i%cols.length]}"></div>
+      <div class="today-time">${s.t.length>5?s.t.split('–')[0]:s.t}</div>
+      <div class="today-act">${s.title}</div>
+    </div>
+  `).join('');
+}
 
-            if (isExam) {
-                scheduleHTML = `
-                    <div class="ielts-focus-box" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: var(--secondary);">
-                        <h4 style="color: #92400e;">🎓 IELTS Exam Day</h4>
-                        <p><strong>Сегодня твой день!</strong> Ты готовился 67 дней. Доверься процессу.</p>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">06:00</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Подъём, завтрак</div>
-                            <div class="schedule-desc">Лёгкий завтрак. Не переедай. Проверить документы.</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">07:30</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Выезд на экзамен</div>
-                            <div class="schedule-desc">Приехать за 30 минут до начала. Слушать спокойную музыку.</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">09:00</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Listening (30 min)</div>
-                            <div class="schedule-desc">Фокус, prediction, не паникуй если пропустил — двигайся дальше.</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">09:40</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Reading (60 min)</div>
-                            <div class="schedule-desc">20 мин на текст. Skim → Scan → Answer. Не застревай на одном вопросе.</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">10:50</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Writing (60 min)</div>
-                            <div class="schedule-desc">T1: 20 min (150 words). T2: 40 min (250+ words). Планируй 5 мин!</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">12:00</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Перерыв / Обед</div>
-                            <div class="schedule-desc">Поесть, отдохнуть. Не обсуждай ответы с другими!</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">13:00-17:00</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">Speaking (11-14 min)</div>
-                            <div class="schedule-desc">Будь естественным, улыбайся. Part 2: говори 2 минуты. Part 3: развёрнутые ответы.</div>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="schedule-time">Вечер</div>
-                        <div class="schedule-content">
-                            <div class="schedule-title">🎉 Отдыхай!</div>
-                            <div class="schedule-desc">Ты сделал всё возможное. Результат придёт через 13 дней.</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                const dayIdx = date.getDay() === 0 ? 6 : date.getDay() - 1;
-                const schedule = getScheduleByDay(dayIdx);
+// ================================================================
+// CALENDAR
+// ================================================================
+function buildCalendar(){
+  const cal=document.getElementById('calendar');
+  ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(h=>{
+    const el=document.createElement('div');el.className='cal-hdr';el.textContent=h;cal.appendChild(el);
+  });
 
-                scheduleHTML = '<h3 style="margin-bottom: 1rem; color: var(--primary);">⏰ Расписание дня</h3>';
+  // Start from Monday before Apr 24 (Apr 20)
+  let cur=new Date(START);
+  const dow=cur.getDay();
+  cur.setDate(cur.getDate()-(dow===0?6:dow-1));
 
-                schedule.forEach(item => {
-                    scheduleHTML += `
-                        <div class="schedule-item">
-                            <div class="schedule-time">${item.time}</div>
-                            <div class="schedule-content">
-                                <div class="schedule-title">${item.title}</div>
-                                <div class="schedule-desc">${item.desc}</div>
-                            </div>
-                        </div>
-                    `;
-                });
+  for(let i=0;i<77;i++){
+    const d=new Date(cur);
+    const inRange=d>=START&&d<=EXAM;
+    const isExam=d.toDateString()===EXAM.toDateString();
+    const isToday=d.toDateString()===new Date().toDateString();
 
-                // IELTS Focus
-                if (weekNum >= 0 && weekNum < weekData.length && weekData[weekNum].days[weekDay]) {
-                    const dayData = weekData[weekNum].days[weekDay];
-                    scheduleHTML += `
-                        <div class="ielts-focus-box">
-                            <h4>🎯 IELTS Focus: ${dayData.focus}</h4>
-                            <p>${dayData.task}</p>
-                        </div>
-                    `;
-                }
-            }
+    const cell=document.createElement('div');
+    cell.className='cal-cell'+(inRange?'':' dim')+(isExam?' exam':'')+(isToday?' today':'');
 
-            body.innerHTML = scheduleHTML;
-            modal.classList.add('active');
-        }
+    if(inRange&&!isExam){
+      const wn=Math.floor((d-START)/(7*86400000));
+      const di=d.getDay()===0?6:d.getDay()-1;
+      const wd=WEEKS[Math.min(wn,WEEKS.length-1)];
+      const dd=wd?wd.days[di]:null;
 
-        function getScheduleByDay(dayIdx) {
-            // 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
-            const base = [
-                { time: "06:00", title: "Morning Routine", desc: "Подъём, завтрак, свободное время. Можно почитать статьи на английском." },
-            ];
+      if(dd&&dd.focus){
+        const stripe=document.createElement('div');
+        stripe.className='cal-stripe';
+        stripe.style.background=BC[dd.badge]||'#aaa';
+        cell.appendChild(stripe);
 
-            if (dayIdx === 6) { // Sunday
-                return [
-                    { time: "06:00", title: "Morning Routine", desc: "Подъём, завтрак. Не спи до обеда — сохраняй режим." },
-                    { time: "07:00", title: "Light Activity", desc: "Прогулка, зарядка, или лёгкое чтение. Chill mode." },
-                    { time: "08:00", title: "Free Time / Light Reading", desc: "Статьи на английском без pressure. Интересные темы." },
-                    { time: "12:00", title: "Lunch", desc: "Полноценный обед. Отдых." },
-                    { time: "13:00", title: "IELTS Light Practice", desc: "2-3 часа практики (см. недельный фокус). Не перегружай себя." },
-                    { time: "17:00", title: "Dinner", desc: "Ужин 30 минут." },
-                    { time: "17:30", title: "Free Time / Relax", desc: "Игры, фильмы на английском, прогулка. Полный релакс." },
-                    { time: "21:00", title: "Speaking Practice", desc: "1 час разговора с друзьями на английском." },
-                    { time: "22:00", title: "Wind Down", desc: "Готовься ко сну. Лёгкое чтение. Сон до 23:00." }
-                ];
-            }
+        const badge=document.createElement('div');
+        badge.className='cal-badge';
+        badge.style.background=BC[dd.badge];
+        cell.appendChild(badge);
 
-            const schoolItems = [
-                { time: "07:15", title: "Commute to School", desc: "Дорога в школу 45 мин. Слушай подкасты на английском (BBC, TED)." },
-                { time: "08:00", title: "School Lessons 1-6", desc: "1: Будущее | 2: Технология | 3: География | 4: Физика | 5: Литература | 6: Физкультура" },
-            ];
+        const fc=document.createElement('div');
+        fc.className='cal-focus';
+        fc.textContent=dd.focus;
+        cell.appendChild(fc);
 
-            if ([0, 2, 4].includes(dayIdx)) { // Mon, Wed, Fri
-                return [
-                    ...base,
-                    ...schoolItems,
-                    { time: "13:00", title: "IELTS Center", desc: "Сразу со школы в учебный центр. Занятия IELTS 13:00-16:00." },
-                    { time: "16:00", title: "Commute Home", desc: "Дорога домой 1 час. Слушай подкасты / повторяй vocabulary." },
-                    { time: "17:00", title: "Dinner", desc: "Ужин 30 минут. Перекуси, восстанови силы." },
-                    { time: "17:30", title: "IELTS Self-Study", desc: "3.5 часа интенсивной практики (см. недельный фокус)." },
-                    { time: "21:00", title: "Speaking Practice", desc: "1 час разговора с друзьями на английском." },
-                    { time: "22:00", title: "Wind Down / Sleep", desc: "Отдых, подготовка ко сну. Свет выключен до 23:00." }
-                ];
-            } else { // Tue, Thu, Sat
-                return [
-                    ...base,
-                    ...schoolItems,
-                    { time: "13:00", title: "Commute Home", desc: "Дорога домой 45 мин. Слушай подкасты / аудиокниги." },
-                    { time: "14:00", title: "IELTS Self-Study", desc: "3 часа практики (см. недельный фокус). Пока мозг свежий!" },
-                    { time: "17:00", title: "Dinner", desc: "Ужин 30 минут." },
-                    { time: "17:30", title: "Training", desc: "Спортивная тренировка 1.5 часа. Физическая активность = лучшая концентрация." },
-                    { time: "19:00", title: "Relax / Light Reading", desc: "Отдых, лёгкое чтение на английском, прогулка." },
-                    { time: "20:00", title: "Evening Routine", desc: "Умывание, подготовка ко сну. Не сиди в телефоне." },
-                    { time: "21:00", title: "Sleep", desc: "Сон! 7-8 часов сна критически важны для памяти." }
-                ];
-            }
-        }
+        cell.onclick=()=>openModal(d,wn,di);
+      }
+    } else if(isExam){
+      cell.onclick=()=>openExamModal();
+    }
 
-        function closeModal(event) {
-            if (!event || event.target.id === 'modal') {
-                document.getElementById('modal').classList.remove('active');
-            }
-        }
+    const num=document.createElement('div');num.className='cal-num';num.textContent=isExam?'🎯':d.getDate();
+    const dn=document.createElement('div');dn.className='cal-wday';dn.textContent=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][d.getDay()];
+    cell.prepend(dn);cell.prepend(num);
 
-        // Weekly tabs
-        function showWeek(index) {
-            document.querySelectorAll('.nav-tab').forEach((tab, i) => {
-                tab.classList.toggle('active', i === index);
-            });
-            renderWeek(index);
-        }
+    cal.appendChild(cell);
+    cur.setDate(cur.getDate()+1);
+  }
+}
 
-        function renderWeek(index) {
-            const container = document.getElementById('weeks-container');
-            const week = weekData[index];
-            const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-            const dayKeys = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// ================================================================
+// MODAL
+// ================================================================
+function openModal(date,wn,di){
+  const sched=getDaySchedule(date.getDay());
+  const wd=WEEKS[Math.min(wn,WEEKS.length-1)];
+  const dd=wd?wd.days[di]:null;
+  const dateStr=date.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('modalTitle').textContent=dateStr;
 
-            let html = `
-                <div class="week-card">
-                    <h3>Неделя ${index + 1}: ${week.theme}</h3>
-                    <div class="week-theme">${week.goals}</div>
-                    <div style="margin-top: 1rem;">
-            `;
+  let html=`<div style="font-family:'Exo 2',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.75rem">⏰ РАСПИСАНИЕ ДНЯ</div>`;
+  sched.forEach(s=>{
+    html+=`<div class="sched-row"><div class="s-time">${s.t}</div><div class="s-icon">${s.i}</div><div><div class="s-title">${s.title}</div><div class="s-desc">${s.d}</div></div></div>`;
+  });
 
-            dayKeys.forEach((key, i) => {
-                const day = week.days[key];
-                const badgeColors = {
-                    listening: '#3b82f6', reading: '#8b5cf6', writing: '#f59e0b', 
-                    speaking: '#10b981', full: '#ef4444'
-                };
-                html += `
-                    <div style="padding: 0.75rem; background: var(--bg); border-radius: 8px; margin-bottom: 0.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <div style="width: 10px; height: 10px; border-radius: 50%; background: ${badgeColors[day.badge]};"></div>
-                            <strong>${dayNames[i]}</strong>
-                            <span style="color: var(--text-light); font-size: 0.875rem;">— ${day.focus}</span>
-                        </div>
-                        <div style="font-size: 0.875rem; color: var(--text-light); padding-left: 1.25rem;">${day.task}</div>
-                    </div>
-                `;
-            });
+  if(dd&&dd.focus){
+    const cy=dd.cycle?`<span style="display:inline-block;font-size:.6rem;padding:.08rem .4rem;border-radius:4px;background:rgba(0,200,240,.12);color:var(--primary);font-weight:700;margin-left:.4rem;text-transform:uppercase">${dd.cycle}</span>`:'';
+    html+=`<div class="m-focus-box"><div class="m-focus-title">🎯 IELTS Focus: ${dd.focus} ${cy}</div><div class="m-focus-text">${dd.task}</div></div>`;
+  }
 
-            html += '</div></div>';
-            container.innerHTML = html;
-        }
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('modal').classList.add('open');
+}
 
-        // Countdown
-        function updateCountdown() {
-            const now = new Date();
-            const diff = examDate - now;
+function openExamModal(){
+  document.getElementById('modalTitle').textContent='🎯 30 июня 2026 — ДЕНЬ ЭКЗАМЕНА!';
+  const rows=[
+    ['05:20','⏰','Подъём','Лёгкий завтрак. Проверь документы. Не ешь слишком много.'],
+    ['06:30','🚗','Выезд','Приехать за 30 минут до начала. Слушай спокойную музыку.'],
+    ['09:00','🎧','Listening (40 мин)','Prediction strategy. Если пропустил — не паникуй, двигайся дальше!'],
+    ['09:45','📖','Reading (60 мин)','20 мин на текст. Skim → Scan → Answer. Не застревай на одном вопросе.'],
+    ['10:55','✍️','Writing (60 мин)','T1: 20 мин (150 слов). T2: 40 мин (260+ слов). Планируй 5 мин обязательно!'],
+    ['12:00','🍽️','Перерыв','Поешь, отдохни. НЕ обсуждай ответы с другими — это сбивает.'],
+    ['13:00+','🗣️','Speaking (11–14 мин)','Будь естественным. Part 2: говори 2 минуты. Part 3: развёрнутые ответы.'],
+    ['Вечер','🎉','ОТДЫХАЙ!','Ты сделал всё возможное. Результат через 13 дней. Гордись собой!']
+  ];
 
-            if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  let html=`<div style="background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.03));border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:1rem;margin-bottom:1rem">
+    <div style="font-family:'Exo 2',sans-serif;font-weight:700;color:var(--secondary);margin-bottom:.3rem">🏆 Ты готовился 67 дней. Доверься процессу!</div>
+    <div style="font-size:.8rem;color:var(--text-dim)">Сегодня не нужно ничего учить. Просто покажи что умеешь.</div>
+  </div>`;
 
-                document.getElementById('cd-days').textContent = days;
-                document.getElementById('cd-hours').textContent = hours;
-                document.getElementById('cd-minutes').textContent = minutes;
-                document.getElementById('cd-seconds').textContent = seconds;
-            }
-        }
+  rows.forEach(([t,ic,ti,d])=>{
+    html+=`<div class="sched-row"><div class="s-time">${t}</div><div class="s-icon">${ic}</div><div><div class="s-title">${ti}</div><div class="s-desc">${d}</div></div></div>`;
+  });
 
-        // Init
-        generateCalendar();
-        renderWeek(0);
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('modal').classList.add('open');
+}
 
-  document.getElementById('difference').onclick = function() {
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+// ================================================================
+// WEEK TABS
+// ================================================================
+function buildWeekTabs(){
+  const tabs=document.getElementById('weekTabs');
+  const labels=['24–30 апр','27 апр–3 май','4–10 май','11–17 май','18–24 май','25–31 май','1–7 июн','8–14 июн','15–28 июн','29–30 июн'];
+  WEEKS.forEach((_,i)=>{
+    const btn=document.createElement('button');
+    btn.className='w-tab'+(i===0?' active':'');
+    btn.innerHTML=`<span style="opacity:.6;font-size:.65rem">Нед ${i+1}</span><br>${labels[i]}`;
+    btn.style.lineHeight='1.2';
+    btn.onclick=()=>{
+      document.querySelectorAll('.w-tab').forEach(t=>t.classList.remove('active'));
+      btn.classList.add('active');
+      renderWeek(i);
+    };
+    tabs.appendChild(btn);
+  });
+  renderWeek(0);
+}
+
+function renderWeek(idx){
+  const w=WEEKS[idx];
+  const dayNames=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  let html=`<div class="wp-theme" style="color:${w.color}">${w.theme}</div><div class="wp-goals">${w.goals}</div>`;
+
+  w.days.forEach((d,i)=>{
+    if(!d.focus)return;
+    const cy=d.cycle?`<span class="cy-badge">${d.cycle}</span>`:'';
+    html+=`<div class="day-row">
+      <div class="dr-name">${dayNames[i]}</div>
+      <div class="dr-dot" style="background:${BC[d.badge]||'#aaa'}"></div>
+      <div>
+        <div class="dr-focus">${d.focus} ${cy}</div>
+        <div class="dr-task">${d.task}</div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('weekPanel').innerHTML=html;
+}
+
+// ================================================================
+// INIT
+// ================================================================
+buildCalendar();
+buildWeekTabs();
+updateProgress();
+updateToday();
+updateCD();
+setInterval(updateCD,1000);
+
+
+ document.getElementById('difference').onclick = function() {
             window.location.href = "explainwhy.html";
         };
-    </script>
+</script>
 </body>
 </html>
